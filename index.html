@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hikma Hasan — Portfolio</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <style>
+        :root {
+            --p: #0F2747;
+            /* Primary: Navy */
+            --a: #B08D57;
+            /* Accent: Gold */
+            --b: #F6F1E8;
+            /* Base: Ivory */
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+        }
+
+        /* Better anchor alignment with fixed nav (no extra visible spacing) */
+
+        section[id] {
+            scroll-margin-top: 80px;
+        }
+
+        /* 64px nav + small breathing space */
+        /* Accessible focus (derived from theme colors only) */
+
+        .focus-ring:focus-visible {
+            outline: 2px solid color-mix(in srgb, var(--a) 85%, transparent);
+            outline-offset: 2px;
+            border-radius: 10px;
+        }
+
+        /* Dropdown: prevent hover "gap" from closing */
+
+        .dropdown-panel {
+            transform-origin: top;
+        }
+
+        /* Premium micro-interactions (no new colors) */
+
+        .premium-card {
+            transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+            will-change: transform;
+        }
+
+        .premium-card:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Elegant primary CTA */
+
+        .cta-primary {
+            box-shadow: 0 1px 0 color-mix(in srgb, var(--p) 55%, transparent), 0 8px 18px color-mix(in srgb, var(--p) 18%, transparent);
+            transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease, border-color 180ms ease;
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 1px 0 color-mix(in srgb, var(--p) 55%, transparent), 0 12px 26px color-mix(in srgb, var(--p) 22%, transparent);
+        }
+
+        .cta-primary:active {
+            transform: translateY(0px);
+        }
+
+        /* Subtle glass-like surfaces that adapt to theme via vars */
+
+        .surface {
+            background: color-mix(in srgb, var(--b) 92%, transparent);
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+
+<body class="bg-[var(--b)] text-[var(--p)] antialiased selection:bg-[var(--a)]/20 selection:text-[var(--p)]">
+    <!-- NAV (PROFESSIONAL + SMALL SCREEN FIXED + NO SEARCH) -->
+    <nav class="fixed inset-x-0 top-0 z-50 w-full overflow-x-clip">
+        <div class="w-full border-b border-[var(--p)]/15 bg-[var(--b)]/85 backdrop-blur">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="flex h-16 items-center justify-between min-w-0">
+
+                    <!-- Brand -->
+                    <a href="#home" class="flex items-center gap-2 font-semibold text-base sm:text-xl min-w-0">
+                        <span class="text-[var(--p)] shrink-0">Designing</span>
+                        <span class="text-[var(--a)] truncate">Services</span>
+                    </a>
+
+                    <!-- Desktop Menu -->
+                    <div class="hidden md:flex items-center gap-6">
+
+                        <a href="#home" class="navlink text-sm font-medium hover:text-[var(--a)]">Home</a>
+                        <a href="#about" class="navlink text-sm font-medium hover:text-[var(--a)]">About</a>
+
+                        <!-- Projects Dropdown -->
+                        <div class="relative">
+                            <button id="projectsBtn" aria-haspopup="true" aria-expanded="false"
+                                class="flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-lg hover:bg-[var(--p)]/[0.05] transition"
+                                type="button">
+                                Projects
+                                <svg class="w-4 h-4 transition-transform" id="projectsIcon"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+
+                            <div id="projectsDropdown" role="menu" class="absolute right-0 z-50 mt-2 w-56 rounded-xl border border-[var(--p)]/15
+               bg-[var(--b)]/95 backdrop-blur shadow-lg overflow-hidden
+               opacity-0 scale-95 pointer-events-none
+               transition-all duration-150">
+                                <a href="#web" role="menuitem"
+                                    class="block px-4 py-3 text-sm hover:bg-[var(--p)]/[0.05]">
+                                    Web Design
+                                </a>
+                                <a href="#logo" role="menuitem"
+                                    class="block px-4 py-3 text-sm hover:bg-[var(--p)]/[0.05]">
+                                    Logo Design
+                                </a>
+                                <a href="#posters" role="menuitem"
+                                    class="block px-4 py-3 text-sm hover:bg-[var(--p)]/[0.05]">
+                                    Posters
+                                </a>
+                            </div>
+                        </div>
+                        <script>
+                            (() => {
+                                const btn = document.getElementById("projectsBtn");
+                                const dropdown = document.getElementById("projectsDropdown");
+                                const icon = document.getElementById("projectsIcon");
+
+                                const openMenu = () => {
+                                    dropdown.classList.remove("opacity-0", "scale-95", "pointer-events-none");
+                                    btn.setAttribute("aria-expanded", "true");
+                                    icon.classList.add("rotate-180");
+                                };
+
+                                const closeMenu = () => {
+                                    dropdown.classList.add("opacity-0", "scale-95", "pointer-events-none");
+                                    btn.setAttribute("aria-expanded", "false");
+                                    icon.classList.remove("rotate-180");
+                                };
+
+                                btn.addEventListener("click", (e) => {
+                                    e.stopPropagation();
+                                    dropdown.classList.contains("pointer-events-none") ?
+                                        openMenu() :
+                                        closeMenu();
+                                });
+
+                                document.addEventListener("click", closeMenu);
+
+                                document.addEventListener("keydown", (e) => {
+                                    if (e.key === "Escape") closeMenu();
+                                });
+                            })();
+                        </script>
+
+                        <a href="#contact" class="navlink text-sm font-medium hover:text-[var(--a)]">Contact</a>
+
+                        <!-- Hire Me -->
+                        <a href="#contact"
+                            class="cta-primary rounded-md bg-[var(--p)] text-[var(--b)] px-6 py-2 text-sm font-semibold hover:opacity-95 whitespace-nowrap">
+                            Hire Me
+                        </a>
+
+                        <!-- Theme Toggle -->
+                    </div>
+                    <!-- Mobile Button --><button id="mobile-menu-button"
+                        class="md:hidden rounded-md border border-[var(--p)]/20 bg-[var(--b)]/30 px-3 py-2"><i
+                            class="fas fa-bars text-lg"></i></button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-[var(--b)]/95 border-t border-[var(--p)]/15 backdrop-blur">
+            <div class="mx-auto max-w-md px-4 py-4 space-y-1"><a href="#home"
+                    class="block rounded-md px-3 py-2 text-sm hover:bg-[var(--p)]/[0.05]">Home</a><a href="#about"
+                    class="block rounded-md px-3 py-2 text-sm hover:bg-[var(--p)]/[0.05]">About</a>
+                <!-- Mobile Projects -->
+                <div class="border border-[var(--p)]/15 rounded-xl overflow-hidden"><button id="mobileProjectsBtn"
+                        class="w-full flex justify-between px-3 py-2 text-sm hover:bg-[var(--p)]/[0.05]">Projects <i
+                            class="fas fa-chevron-down text-xs"></i></button><a href="#contact"
+                        class="block rounded-md px-3 py-2 text-sm hover:bg-[var(--p)]/[0.05]">Contact</a>
+                    <button id="theme-toggle-mobile"
+                        class="w-full rounded-md border border-[var(--p)]/20 bg-[var(--b)]/30 py-2 text-sm">Toggle Theme
+                    </button><a href="#contact"
+                        class="block text-center rounded-md bg-[var(--p)] text-[var(--b)] py-2 font-semibold">Hire Me
+                    </a>
+                </div>
+            </div>
+    </nav>
+    <!-- HERO -->
+    <section id="home" class="pt-[calc(64px+14px)] sm:pt-[calc(64px+18px)] pb-16 sm:pb-20">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
+                <!-- Text -->
+                <div class="min-w-0">
+                    <p
+                        class="inline-flex items-center gap-2 rounded-full border border-[var(--p)]/15 bg-[var(--b)]/80 px-4 py-1.5 text-xs font-semibold tracking-widest uppercase">
+                        <span class="h-2 w-2 rounded-full bg-[var(--a)]"></span>Frontend Developer • UI/UX Designer
+                    </p>
+                    <h1 class="mt-5 font-serif text-4xl sm:text-5xl lg:text-6xl leading-tight">Hikma <span
+                            class="text-[var(--a)]">Hasan</span></h1>
+                    <p class="mt-4 max-w-xl text-sm sm:text-base text-[var(--p)]/80 leading-relaxed">I craft clean,
+                        fast, and accessible interfaces that work beautifully across devices. <span
+                            class="font-semibold text-[var(--p)]">2+years</span>building modern web experiences and
+                        digital identities focused on usability and conversion.
+                    </p>
+                    <div class="mt-7 flex flex-col sm:flex-row gap-3"><a href="#web"
+                            class="cta-primary inline-flex items-center justify-center rounded-md border border-[var(--p)]/15 bg-[var(--p)] px-6 py-[0.7rem] text-sm font-semibold text-[var(--b)] hover:opacity-95 transition focus-ring">View
+                            Projects </a>
+                        <a href="#contact"
+                            class="inline-flex items-center justify-center rounded-md border border-[var(--p)]/20 bg-[var(--b)]/50 px-6 py-[0.7rem] text-sm font-semibold hover:border-[var(--a)] hover:bg-[var(--p)]/[0.03] transition focus-ring">Get
+                            in Touch </a>
+                    </div>
+                    <!-- Stats -->
+                    <div class="mt-9 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-xl">
+                        <div
+                            class="premium-card rounded-xl border border-[var(--p)]/15 bg-[var(--b)]/70 p-5 shadow-sm hover:shadow-md">
+                            <p class="text-lg font-bold leading-none">2+yrs</p>
+                            <p class="mt-1 text-xs text-[var(--p)]/70">Experience</p>
+                        </div>
+                        <div
+                            class="premium-card rounded-xl border border-[var(--p)]/15 bg-[var(--b)]/70 p-5 shadow-sm hover:shadow-md">
+                            <p class="text-lg font-bold leading-none">30+</p>
+                            <p class="mt-1 text-xs text-[var(--p)]/70">Projects</p>
+                        </div>
+                        <div
+                            class="premium-card rounded-xl border border-[var(--p)]/15 bg-[var(--b)]/70 p-5 shadow-sm hover:shadow-md">
+                            <p class="text-lg font-bold leading-none">UI/UX</p>
+                            <p class="mt-1 text-xs text-[var(--p)]/70">Focused</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Image -->
+                <div class="min-w-0 flex justify-center lg:justify-end">
+                    <div
+                        class="premium-card w-full max-w-sm rounded-2xl border border-[var(--p)]/15 bg-[var(--b)]/80 shadow-lg overflow-hidden hover:shadow-xl">
+                        <div class="p-4 sm:p-5">
+                            <div class="rounded-xl overflow-hidden border border-[var(--p)]/10"><img
+                                    src="./images/h1.png" alt="Hikma Hasan" class="w-full h-auto object-cover" /></div>
+                            <div
+                                class="mt-4 flex items-center justify-between gap-3 rounded-xl border border-[var(--p)]/15 bg-[var(--b)]/60 px-4 py-3">
+                                <div class="min-w-0">
+                                    <p class="font-semibold leading-snug">Available for freelance</p>
+                                    <p class="text-xs text-[var(--p)]/70">UI/UX • Web • Landing pages</p>
+                                </div><span class="shrink-0 inline-flex h-3 w-3 rounded-full bg-[var(--a)]"
+                                    title="Available"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ABOUT -->
+    <section id="about" class="py-16 sm:py-20 border-t border-[var(--p)]/10">
+        <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
+                <!-- Text -->
+                <div class="order-2 lg:order-1 min-w-0">
+                    <h2 class="font-serif text-3xl sm:text-4xl leading-tight">About <span
+                            class="text-[var(--a)]">Me</span></h2>
+                    <p class="mt-5 text-sm sm:text-base text-[var(--p)]/80 leading-relaxed">I create sleek, responsive,
+                        and interactive web applications that not only look refined but also provide a seamless user
+                        experience. I combine modern frontend development with a strong design foundation. </p>
+                    <div class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div
+                            class="premium-card rounded-xl border border-[var(--p)]/15 bg-[var(--b)]/70 p-5 shadow-sm hover:shadow-md">
+                            <p class="text-2xl font-bold text-[var(--a)] leading-none">2+</p>
+                            <p class="mt-1 text-sm text-[var(--p)]/70">Years Experience</p>
+                        </div>
+                        <div
+                            class="premium-card rounded-xl border border-[var(--p)]/15 bg-[var(--b)]/70 p-5 shadow-sm hover:shadow-md">
+                            <p class="text-2xl font-bold text-[var(--a)] leading-none">30+</p>
+                            <p class="mt-1 text-sm text-[var(--p)]/70">Projects Completed</p>
+                        </div>
+                        <div
+                            class="premium-card rounded-xl border border-[var(--p)]/15 bg-[var(--b)]/70 p-5 shadow-sm hover:shadow-md">
+                            <p class="text-2xl font-bold text-[var(--a)] leading-none">25+</p>
+                            <p class="mt-1 text-sm text-[var(--p)]/70">Clients Served</p>
+                        </div>
+                    </div>
+                    <!-- Skill bars -->
+                    <div class="mt-10 space-y-5">
+                        <div>
+                            <div class="flex justify-between text-sm font-semibold"><span>Frontend
+                                    Development</span><span class="text-[var(--p)]/60">85%</span></div>
+                            <div class="mt-2 h-2 rounded-full bg-[var(--p)]/10 overflow-hidden">
+                                <div class="h-full w-[85%] bg-[var(--a)]"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm font-semibold"><span>CSS & Design</span><span
+                                    class="text-[var(--p)]/60">90%</span></div>
+                            <div class="mt-2 h-2 rounded-full bg-[var(--p)]/10 overflow-hidden">
+                                <div class="h-full w-[90%] bg-[var(--a)]"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm font-semibold"><span>JavaScript & Logic</span><span
+                                    class="text-[var(--p)]/60">70%</span></div>
+                            <div class="mt-2 h-2 rounded-full bg-[var(--p)]/10 overflow-hidden">
+                                <div class="h-full w-[70%] bg-[var(--a)]"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="./assets/cvv.pdf" download="Iynul_Hikma_Hasan_CV.pdf"
+                        class="cta-primary mt-10 inline-flex items-center gap-2 rounded-md border border-[var(--p)]/15 bg-[var(--p)] px-6 py-[0.7rem] text-sm font-semibold text-[var(--b)] hover:opacity-95 transition focus-ring">
+                        <i class="fa-solid fa-download"></i> Download CV
+                    </a>
+                    <script>
+                        document.getElementById('downloadCV').addEventListener('click', function (e) {
+                            e.preventDefault();
+
+                            // Correct path to your PDF
+                            const pdfPath = '/cvv.pdf'; // Make sure it's correct relative to your site root
+
+                            const link = document.createElement('a');
+                            link.href = pdfPath;
+                            link.download = 'Iynul_Hikma_Hasan_CV.pdf';
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                        });
+                    </script>
+
+
+                </div>
+                </script>
+
+
+                <!-- Image -->
+                <div class=" order-1 lg:order-2 min-w-0 flex justify-center lg:justify-end ">
+                    <div
+                        class=" premium-card w-full max-w-sm rounded-2xl border border-[var(--p)]/15 bg-[var(--b)]/80 shadow-lg overflow-hidden hover:shadow-xl ">
+                        <div class=" p-4 sm:p-5 ">
+                            <div class=" rounded-xl overflow-hidden border border-[var(--p)]/10 "><img
+                                    src=" ./images/h2.png " alt=" Professional Portrait "
+                                    class=" w-full h-auto object-cover " /></div>
+                            <div class=" mt-4 rounded-xl border border-[var(--p)]/15 bg-[var(--b)]/60 px-4 py-3 ">
+                                <p class=" text-sm font-semibold leading-snug ">Classic, clean, professional design
+                                </p>
+                                <p class=" text-xs text-[var(--p)]/70 ">Focused on readability and trust</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- PROJECTS -->
+    <section id=" projects " class=" py-16 sm:py-20 border-t border-[var(--p)]/10 ">
+        <div class=" mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ">
+            <div class=" text-center ">
+                <h2 class=" font-serif text-3xl sm:text-4xl leading-tight ">Projects for <span
+                        class=" text-[var(--a)] ">Clients</span></h2>
+                <p class=" mt-3 text-sm sm:text-base text-[var(--p)]/70 max-w-2xl mx-auto leading-relaxed ">A selection
+                    of web projects, logo work, and poster designs presented in a clean, classic layout. </p>
+            </div>
+            <!-- Web Projects -->
+            <section id=" web " class=" mt-14 sm:mt-16 ">
+                <div class=" flex items-center justify-between gap-6 flex-wrap ">
+                    <h3 class=" font-serif text-2xl leading-tight ">Web Projects</h3>
+                    <div class=" h-px flex-1 bg-[var(--p)]/10 min-w-[140px] "></div>
+                </div>
+                <div class=" mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch ">
+                    <!-- Card -->
+                    <article
+                        class=" premium-card h-full rounded-2xl border border-[var(--p)]/15 bg-[var(--b)]/70 shadow-sm overflow-hidden hover:shadow-md transition flex flex-col ">
+                        <div class=" aspect-[16/10] w-full overflow-hidden border-b border-[var(--p)]/10 "><img
+                                src=" ./images/w1.webp " alt=" Coffee Restaurant "
+                                class=" h-full w-full object-cover " />
+                        </div>
+                        <div class=" p-6 flex flex-col flex-1 ">
+                            <h4 class=" font-serif text-xl font-semibold leading-snug ">Coffee Restaurant</h4>
+                            <p class=" mt-2 text-sm text-[var(--p)]/75 leading-relaxed flex-1 ">A responsive website
+                                focused on brand feel, clarity, and conversion. </p>
+                            <div class=" mt-4 flex flex-wrap gap-2 "><span
+                                    class=" rounded-full border border-[var(--p)]/15 bg-[var(--b)]/40 px-3 py-1 text-xs ">HTML</span><span
+                                    class=" rounded-full border border-[var(--p)]/15 bg-[var(--b)]/40 px-3
+                        py-1 text-xs ">CSS</span><span
+                                    class=" rounded-full border border-[var(--p)]/15 bg-[var(--b)]/40 px-3 py-1 text-xs ">JavaScript</span>
+                            </div>
+                            <a href=" https://hikma-123.github.io/coffee.com/ "
+                                class=" mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[var(--a)] hover:underline focus-ring ">View
+                                Project <i class=" fa-solid fa-arrow-right text-xs "></i></a>
+                        </div>
+                    </article>
+                    <article
+                        class=" premium-card h-full rounded-2xl border border-[var(--p)]/15 bg-[var(--b)]/70 shadow-sm overflow-hidden hover:shadow-md transition flex flex-col ">
+                        <div class=" aspect-[16/10] w-full overflow-hidden border-b border-[var(--p)]/10 "><img
+                                src=" ./images/w2.png " alt=" Clothing Brand " class=" h-full w-full object-cover " />
+                        </div>
+                        <div class=" p-6 flex flex-col flex-1 ">
+                            <h4 class=" font-serif text-xl font-semibold leading-snug ">Clothing Brand</h4>
+                            <p class=" mt-2 text-sm text-[var(--p)]/75 leading-relaxed flex-1 ">An e-commerce style
+                                layout with clean structure and modern spacing. </p>
+                            <div class=" mt-4 flex flex-wrap gap-2 "><span
+                                    class=" rounded-full border border-[var(--p)]/15 bg-[var(--b)]/40 px-3 py-1 text-xs ">HTML</span><span
+                                    class=" rounded-full border border-[var(--p)]/15 bg-[var(--b)]/40 px-3
+                        py-1 text-xs ">Tailwind</span><span
+                                    class=" rounded-full border border-[var(--p)]/15 bg-[var(--b)]/40 px-3 py-1 text-xs ">JavaScript</span>
+                            </div>
+                            <a href=" https://hikma-123.github.io/clothing.com/ "
+                                class=" mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[var(--a)] hover:underline focus-ring ">View
+                                Project <i class=" fa-solid fa-arrow-right text-xs "></i></a>
+                        </div>
+                    </article>
+                    <article
+                        class=" premium-card h-full rounded-2xl border border-[var(--p)]/15 bg-[var(--b)]/70 shadow-sm overflow-hidden hover:shadow-md transition flex flex-col ">
+                        <div class=" aspect-[16/10] w-full overflow-hidden border-b border-[var(--p)]/10 "><img
+                                src=" ./images/w3.webp " alt=" Photographer " class=" h-full w-full object-cover " />
+                        </div>
+                        <div class=" p-6 flex flex-col flex-1 ">
+                            <h4 class=" font-serif text-xl font-semibold leading-snug ">Photographer</h4>
+                            <p class=" mt-2 text-sm text-[var(--p)]/75 leading-relaxed flex-1 ">A personal portfolio
+                                with emphasis on imagery and simple navigation. </p>
+                            <div class=" mt-4 flex flex-wrap gap-2 "><span
+                                    class=" rounded-full border border-[var(--p)]/15 bg-[var(--b)]/40 px-3 py-1 text-xs ">HTML</span><span
+                                    class=" rounded-full border border-[var(--p)]/15 bg-[var(--b)]/40 px-3
+                        py-1 text-xs ">CSS</span><span
+                                    class=" rounded-full border border-[var(--p)]/15 bg-[var(--b)]/40 px-3 py-1 text-xs ">JavaScript</span>
+                            </div>
+                            <a href=" https://hikma-123.github.io/photographer.com/ "
+                                class=" mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[var(--a)] hover:underline focus-ring ">View
+                                Project <i class=" fa-solid fa-arrow-right text-xs "></i></a>
+                        </div>
+                    </article>
+                </div>
+            </section>
+            <!-- Logo -->
+            <section id=" logo " class=" mt-16 sm:mt-20 ">
+                <div class=" flex items-center justify-between gap-6 flex-wrap ">
+                    <h3 class=" font-serif text-2xl leading-tight ">Logo Designs</h3>
+                    <div class=" h-px flex-1 bg-[var(--p)]/10 min-w-[140px] "></div>
+                </div>
+                <div class=" mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6 ">
+                    <div
+                        class=" premium-card rounded-2xl border border-[var(--p)]/15 bg-[var(--b)]/70 p-4 shadow-sm hover:shadow-md flex items-center justify-center ">
+                        <img src=" ./images/lo1.png " alt=" Logo 1 "
+                            class=" h-28 w-28 sm:h-32 sm:w-32 object-contain " />
+                    </div>
+                    <div
+                        class=" premium-card rounded-2xl border border-[var(--p)]/15 bg-[var(--b)]/70 p-4 shadow-sm hover:shadow-md flex items-center justify-center ">
+                        <img src=" ./images/lo2.png " alt=" Logo 2 "
+                            class=" h-28 w-28 sm:h-32 sm:w-32 object-contain " />
+                    </div>
+                    <div
+                        class=" premium-card rounded-2xl border border-[var(--p)]/15 bg-[var(--b)]/70 p-4 shadow-sm hover:shadow-md flex items-center justify-center ">
+                        <img src=" ./images/lo3.png " alt=" Logo 3 "
+                            class=" h-28 w-28 sm:h-32 sm:w-32 object-contain " />
+                    </div>
+                    <div
+                        class=" premium-card rounded-2xl border border-[var(--p)]/15 bg-[var(--b)]/70 p-4 shadow-sm hover:shadow-md flex items-center justify-center ">
+                        <img src=" ./images/lo4.png " alt=" Logo 4 "
+                            class=" h-28 w-28 sm:h-32 sm:w-32 object-contain " />
+                    </div>
+                    <div
+                        class=" premium-card rounded-2xl border border-[var(--p)]/15 bg-[var(--b)]/70 p-4 shadow-sm hover:shadow-md flex items-center justify-center ">
+                        <img src=" ./images/lo5.png " alt=" Logo 5 "
+                            class=" h-28 w-28 sm:h-32 sm:w-32 object-contain " />
+                    </div>
+                    <div
+                        class=" premium-card rounded-2xl border border-[var(--p)]/15 bg-[var(--b)]/70 p-4 shadow-sm hover:shadow-md flex items-center justify-center ">
+                        <img src=" ./images/lo6.png " alt=" Logo 6 "
+                            class=" h-28 w-28 sm:h-32 sm:w-32 object-contain " />
+                    </div>
+                    <div
+                        class=" premium-card rounded-2xl border border-[var(--p)]/15 bg-[var(--b)]/70 p-4 shadow-sm hover:shadow-md flex items-center justify-center ">
+                        <img src=" ./images/lo7.png " alt=" Logo 7 "
+                            class=" h-28 w-28 sm:h-32 sm:w-32 object-contain " />
+                    </div>
+                    <div
+                        class=" premium-card rounded-2xl border border-[var(--p)]/15 bg-[var(--b)]/70 p-4 shadow-sm hover:shadow-md flex items-center justify-center ">
+                        <img src=" ./images/lo8.png " alt=" Logo 8 "
+                            class=" h-28 w-28 sm:h-32 sm:w-32 object-contain " />
+                    </div>
+                </div>
+            </section>
+            <!-- Posters -->
+            <section id=" posters " class=" mt-16 sm:mt-20 ">
+                <div class=" flex items-center justify-between gap-6 flex-wrap ">
+                    <h3 class=" font-serif text-2xl leading-tight ">Posters</h3>
+                    <div class=" h-px flex-1 bg-[var(--p)]/10 min-w-[140px] "></div>
+                </div>
+                <div class=" mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 ">
+                    <div
+                        class=" premium-card rounded-2xl border border-[var(--p)]/15 bg-[var(--b)]/70 shadow-sm overflow-hidden hover:shadow-md transition ">
+                        <div class=" aspect-[4/5] w-full "><img src=" ./images/po1.png " alt=" Poster 1 "
+                                class=" h-full w-full object-cover " /></div>
+                    </div>
+                    <div
+                        class=" premium-card rounded-2xl border border-[var(--p)]/15 bg-[var(--b)]/70 shadow-sm overflow-hidden hover:shadow-md transition ">
+                        <div class=" aspect-[4/5] w-full "><img src=" ./images/po2.png " alt=" Poster 2 "
+                                class=" h-full w-full object-cover " /></div>
+                    </div>
+                    <div
+                        class=" premium-card rounded-2xl border border-[var(--p)]/15 bg-[var(--b)]/70 shadow-sm overflow-hidden hover:shadow-md transition ">
+                        <div class=" aspect-[4/5] w-full "><img src=" ./images/po3.png " alt=" Poster 3 "
+                                class=" h-full w-full object-cover " /></div>
+                    </div>
+                    <div
+                        class=" premium-card rounded-2xl border border-[var(--p)]/15 bg-[var(--b)]/70 shadow-sm overflow-hidden hover:shadow-md transition ">
+                        <div class=" aspect-[4/5] w-full "><img src=" ./images/po5.png " alt=" Poster 4 "
+                                class=" h-full w-full object-cover " /></div>
+                    </div>
+                    <div
+                        class=" premium-card rounded-2xl border border-[var(--p)]/15 bg-[var(--b)]/70 shadow-sm overflow-hidden hover:shadow-md transition ">
+                        <div class=" aspect-[4/5] w-full "><img src=" ./images/po6.png " alt=" Poster 5 "
+                                class=" h-full w-full object-cover " /></div>
+                    </div>
+                    <div
+                        class=" premium-card rounded-2xl border border-[var(--p)]/15 bg-[var(--b)]/70 shadow-sm overflow-hidden hover:shadow-md transition ">
+                        <div class=" aspect-[4/5] w-full "><img src=" ./images/po8.png " alt=" Poster 6 "
+                                class=" h-full w-full object-cover " /></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+    <!-- CONTACT -->
+    <section id=" contact " class=" py-16 sm:py-20 border-t border-[var(--p)]/10 ">
+        <div class=" mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 ">
+            <div class=" text-center ">
+                <h2 class=" font-serif text-3xl sm:text-4xl leading-tight ">Get In <span
+                        class=" text-[var(--a)] ">Touch</span></h2>
+                <p class=" mt-3 text-sm sm:text-base text-[var(--p)]/70 max-w-2xl mx-auto leading-relaxed ">Whether you
+                    have a question, want to collaborate, or need design services — I’m happy to connect. </p>
+            </div>
+            <!-- Contact cards -->
+            <div class=" mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch ">
+                <div
+                    class=" premium-card rounded-2xl border border-[var(--p)]/15 bg-[var(--b)]/70 p-6 shadow-sm h-full hover:shadow-md ">
+                    <div class=" flex items-center gap-4 ">
+                        <div class=" h-12 w-12 rounded-full border border-[var(--p)]/15 bg-[var(--b)]/50 grid place-items-center text-[var(--a)] text-xl "
+                            aria-hidden=" true "><i class=" fa-solid fa-envelope "></i></div>
+                        <div class=" min-w-0 ">
+                            <p class=" text-xs tracking-widest uppercase text-[var(--p)]/60 ">Email</p><a
+                                class=" font-semibold break-words hover:text-[var(--a)] transition focus-ring "
+                                href=" mailto:iynulhikma679@gmail.com ">iynulhikma679@gmail.com</a>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class=" premium-card rounded-2xl border border-[var(--p)]/15 bg-[var(--b)]/70 p-6 shadow-sm h-full hover:shadow-md ">
+                    <div class=" flex items-center gap-4 ">
+                        <div class=" h-12 w-12 rounded-full border border-[var(--p)]/15 bg-[var(--b)]/50 grid place-items-center text-[var(--a)] text-xl "
+                            aria-hidden=" true "><i class=" fa-solid fa-phone "></i></div>
+                        <div class=" min-w-0 ">
+                            <p class=" text-xs tracking-widest uppercase text-[var(--p)]/60 ">Phone</p><a
+                                class=" font-semibold hover:text-[var(--a)] transition focus-ring "
+                                href=" tel:+94743890704 ">+94 74 389 0704</a>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class=" premium-card rounded-2xl border border-[var(--p)]/15 bg-[var(--b)]/70 p-6 shadow-sm h-full hover:shadow-md ">
+                    <div class=" flex items-center gap-4 ">
+                        <div class=" h-12 w-12 rounded-full border border-[var(--p)]/15 bg-[var(--b)]/50 grid place-items-center text-[var(--a)] text-xl "
+                            aria-hidden=" true "><i class=" fa-solid fa-location-dot "></i></div>
+                        <div class=" min-w-0 ">
+                            <p class=" text-xs tracking-widest uppercase text-[var(--p)]/60 ">Location</p>
+                            <p class=" font-semibold ">Colombo, Sri Lanka</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Social -->
+            <div class="mt-10 flex justify-center gap-4">
+                <!-- LinkedIn -->
+                <a href="https://www.linkedin.com/in/iynul-hikma-556a89260/" target="_blank" rel="noreferrer"
+                    class="h-11 w-11 rounded-full border border-[var(--p)]/15 bg-[var(--b)]/40 grid place-items-center 
+            hover:border-[var(--a)] hover:bg-[var(--b)]/60 hover:scale-110 hover:shadow-md transition-transform transition-colors duration-300 focus-ring" aria-label="LinkedIn">
+                    <i class="fa-brands fa-linkedin-in text-[var(--p)]"></i>
+                </a>
+
+                <!-- GitHub -->
+                <a href="https://github.com/hikma-123" targ
+                    class="h-11 w-11 rounded-full border border-[var(--p)]/15 bg-[var(--b)]/40 grid place-items-center 
+            hover:border-[var(--a)] hover:bg-[var(--b)]/60 hover:scale-110 hover:shadow-md transition-transform transition-colors duration-300 focus-ring"
+                    aria-label="GitHub">
+                    <i class="fa-brands fa-github text-[var(--p)]"></i>
+                </a>
+
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/nex_hue" target="_blank" rel="noreferrer"
+                    class="h-11 w-11 rounded-full border border-[var(--p)]/15 bg-[var(--b)]/40 grid place-items-center 
+            hover:border-[var(--a)] hover:bg-[var(--b)]/60 hover:scale-110 hover:shadow-md transition-transform transition-colors duration-300 focus-ring" aria-label="Instagram">
+                    <i class="fa-brands fa-instagram text-[var(--p)]"></i>
+                </a>
+            </div>
+
+            <!-- Form -->
+            <form
+                class=" premium-card mt-12 rounded-2xl border border-[var(--p)]/15 bg-[var(--b)]/70 p-6 sm:p-8 shadow-sm hover:shadow-md transition max-w-4xl mx-auto ">
+                <div class=" grid grid-cols-1 md:grid-cols-2 gap-5 ">
+                    <div><label class=" text-sm font-semibold " for=" name ">Name</label><input id=" name "
+                            type=" text " placeholder=" Your Name " class=" mt-2 w-full rounded-md border border-[var(--p)]/20 bg-transparent px-4 py-3 text-sm sm:text-base
+                        outline-none focus:border-[var(--a)] transition " />
+                    </div>
+                    <div><label class=" text-sm font-semibold " for=" email ">Email</label><input id=" email "
+                            type=" email " placeholder=" youremail@gmail.com " class=" mt-2 w-full rounded-md border border-[var(--p)]/20 bg-transparent px-4 py-3 text-sm
+                        sm:text-base outline-none focus:border-[var(--a)] transition " />
+                    </div>
+                </div>
+                <div class=" mt-5 "><label class=" text-sm font-semibold " for=" subject ">Subject</label><input
+                        id=" subject " type=" text " placeholder=" Subject " class=" mt-2 w-full rounded-md border border-[var(--p)]/20 bg-transparent px-4 py-3
+                        text-sm sm:text-base outline-none focus:border-[var(--a)] transition " />
+                </div>
+                <div class=" mt-5 "><label class=" text-sm font-semibold " for=" message ">Message</label><textarea
+                        id=" message " rows=" 5 " placeholder=" Write your message... " class=" mt-2 w-full rounded-md border border-[var(--p)]/20 bg-transparent
+                        px-4 py-3 text-sm sm:text-base outline-none focus:border-[var(--a)] transition "></textarea>
+                </div>
+                <button type=" submit "
+                    class=" cta-primary mt-6 w-full rounded-md border border-[var(--p)]/15 bg-[var(--p)] py-3 text-sm font-semibold text-[var(--b)] hover:opacity-95 transition focus-ring ">Send
+                    Message </button>
+            </form>
+        </div>
+    </section>
+    <!-- FOOTER -->
+    <footer class=" border-t border-[var(--p)]/10 ">
+        <div class=" mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 ">
+            <div class=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 ">
+                <div class=" min-w-0 ">
+                    <h3 class=" font-serif text-xl font-semibold leading-tight ">Hikma <span
+                            class=" text-[var(--a)] ">Portfolio</span></h3>
+                    <p class=" mt-3 text-sm text-[var(--p)]/70 max-w-xs leading-relaxed ">Crafting digital experiences
+                        that balance creativity, performance, and usability. </p>
+                </div>
+                <div class=" min-w-0 ">
+                    <p class=" text-xs font-semibold tracking-widest uppercase text-[var(--p)]/60 ">Quick Links</p>
+                    <ul class=" mt-3 space-y-2 text-sm ">
+                        <li><a class=" hover:text-[var(--a)] transition focus-ring " href=" #home ">Home</a></li>
+                        <li><a class=" hover:text-[var(--a)] transition focus-ring " href=" #about ">About</a></li>
+                        <li><a class=" hover:text-[var(--a)] transition focus-ring " href=" #projects ">Projects</a>
+                        </li>
+                        <li><a class=" hover:text-[var(--a)] transition focus-ring " href=" #contact ">Contact</a></li>
+                    </ul>
+                </div>
+                <div class=" min-w-0 ">
+                    <p class=" text-xs font-semibold tracking-widest uppercase text-[var(--p)]/60 ">Contact</p>
+                    <ul class=" mt-3 space-y-2 text-sm ">
+                        <li><a class=" hover:text-[var(--a)] transition focus-ring "
+                                href=" mailto:iynulhikma679@gmail.com ">iynulhikma679@gmail.com</a></li>
+                        <li><a class=" hover:text-[var(--a)] transition focus-ring " href=" tel:+94743890704 ">+94 74
+                                389
+                                0704</a></li>
+                        <li class=" text-[var(--p)]/70 ">Colombo, Sri Lanka</li>
+                    </ul>
+                </div>
+                <div class=" min-w-0 ">
+                    <p class=" text-xs font-semibold tracking-widest uppercase text-[var(--p)]/60 ">Newsletter</p>
+                    <p class=" mt-3 text-sm text-[var(--p)]/70 leading-relaxed ">Subscribe for insights and project
+                        updates. </p>
+                    <form class=" mt-4 flex flex-col sm:flex-row gap-2 "><input type=" email "
+                            placeholder=" Your email " class=" w-full rounded-md border border-[var(--p)]/20 bg-transparent px-3 py-2 text-sm outline-none focus:border-[var(--a)] transition
+                        " /><button type=" submit "
+                            class=" cta-primary rounded-md border border-[var(--p)]/15 bg-[var(--p)] px-4 py-2 text-sm font-semibold text-[var(--b)] hover:opacity-95 transition focus-ring ">Subscribe
+                        </button></form>
+
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2026 Iynul Hikma Hasan. All Rights Reserved.
+            </div>
+            <style>
+                .footer-bottom {
+                    text-align: center;
+                    /* Centers the text */
+                    color: #000000;
+                    /* Black text color */
+                    font-size: 14px;
+                    /* Optional: adjust font size */
+                    padding: 15px 0;
+                    /* Optional: spacing above/below */
+                    font-family: 'Segoe UI', Arial, sans-serif;
+                    /* Optional: clean font */
+                }
+            </style>
+        </div>
+        </div>
+    </footer>
+    <!-- SCRIPTS -->
+    <script>
+        // Mobile menu
+        const mobileButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        function closeMobileMenu() {
+            mobileMenu.classList.add('hidden');
+            mobileButton ? .setAttribute('aria-expanded', 'false');
+        }
+
+        function toggleMobileMenu() {
+            const isHidden = mobileMenu.classList.contains('hidden');
+            mobileMenu.classList.toggle('hidden');
+            mobileButton ? .setAttribute('aria-expanded', String(isHidden));
+            if (isHidden) {
+                // close projects panel by default on open
+                document.getElementById('mobileProjectsPanel') ? .classList.add('hidden');
+                document.getElementById('mobileProjectsBtn') ? .setAttribute('aria-expanded', 'false');
+            }
+        }
+
+        mobileButton ? .addEventListener('click', toggleMobileMenu);
+        // Close mobile menu after clicking any internal link (including dropdown links)
+        document.querySelectorAll('#mobile-menu a[href^=" # "]').forEach(a => {
+            a.addEventListener('click', () => closeMobileMenu());
+        }
+
+        );
+        // Mobile Projects accordion
+        const mobileProjectsBtn = document.getElementById('mobileProjectsBtn');
+        const mobileProjectsPanel = document.getElementById('mobileProjectsPanel');
+        mobileProjectsBtn ? .addEventListener('click', () => {
+            const isHidden = mobileProjectsPanel.classList.contains('hidden');
+            mobileProjectsPanel.classList.toggle('hidden');
+            mobileProjectsBtn.setAttribute('aria-expanded', String(isHidden));
+        }
+
+        );
+        // Desktop dropdown (hover + click + keyboard)
+        const projectsBtn = document.getElementById('projectsBtn');
+        const projectsDropdown = document.getElementById('projectsDropdown');
+
+        function openDropdown() {
+            projectsDropdown.classList.remove('hidden');
+            projectsBtn.setAttribute('aria-expanded', 'true');
+        }
+
+        function closeDropdown() {
+            projectsDropdown.classList.add('hidden');
+            projectsBtn.setAttribute('aria-expanded', 'false');
+        }
+
+        function toggleDropdown() {
+            const isHidden = projectsDropdown.classList.contains('hidden');
+            if (isHidden) openDropdown();
+            else closeDropdown();
+        }
+
+        // Hover intent
+        let dropdownTimer;
+        const dropdownWrap = projectsBtn ? .parentElement;
+        dropdownWrap ? .addEventListener('mouseenter', () => {
+            clearTimeout(dropdownTimer);
+            openDropdown();
+        }
+
+        );
+        dropdownWrap ? .addEventListener('mouseleave', () => {
+            dropdownTimer = setTimeout(closeDropdown, 120);
+        }
+
+        );
+        // Click to toggle
+        projectsBtn ? .addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleDropdown();
+        }
+
+        );
+        // Keyboard support
+        projectsBtn ? .addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleDropdown();
+            }
+            if (e.key === 'Escape') {
+                closeDropdown();
+                projectsBtn.blur();
+            }
+            if (e.key === 'ArrowDown') {
+                openDropdown();
+                const firstLink = projectsDropdown.querySelector('a');
+                firstLink && firstLink.focus();
+            }
+        }
+
+        );
+        projectsDropdown ? .addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeDropdown();
+                projectsBtn.focus();
+            }
+        }
+
+        );
+        // Close dropdown on outside click
+        document.addEventListener('click', (e) => {
+            if (!dropdownWrap) return;
+            if (!dropdownWrap.contains(e.target)) {
+                closeDropdown();
+            }
+        }
+
+        );
+        // Close dropdown after clicking a dropdown link
+        projectsDropdown ? .querySelectorAll('a[href^=" # "]').forEach(a => {
+            a.addEventListener('click', () => closeDropdown());
+        }
+
+        );
+        // Theme toggle (ONLY 3 colors, swap primary/base, keep accent)
+        const root = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+        const icon = document.getElementById('theme-icon');
+        const iconMobile = document.getElementById('theme-icon-mobile');
+
+        function updateThemeIcons(mode) {
+            const isDark = mode === 'dark';
+            if (icon) {
+                icon.classList.toggle('fa-moon', !isDark);
+                icon.classList.toggle('fa-sun', isDark);
+            }
+            if (iconMobile) {
+                iconMobile.classList.toggle('fa-moon', !isDark);
+                iconMobile.classList.toggle('fa-sun', isDark);
+            }
+        }
+
+        function setTheme(mode) {
+            if (mode === " dark ") {
+                // dark mode rules:
+                // --b becomes Navy (#0F2747)
+                // --p becomes Ivory (#F6F1E8)
+                // --a stays Gold (#B08D57)
+                root.style.setProperty('--b', '#0F2747');
+                root.style.setProperty('--p', '#F6F1E8');
+                root.style.setProperty('--a', '#B08D57');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                root.style.setProperty('--p', '#0F2747');
+                root.style.setProperty('--a', '#B08D57');
+                root.style.setProperty('--b', '#F6F1E8');
+                localStorage.setItem('theme', 'light');
+            }
+            updateThemeIcons(mode);
+            // update meta for native UI controls
+            root.style.colorScheme = (mode === 'dark') ? 'dark' : 'light';
+        }
+
+        function toggleTheme() {
+            const current = localStorage.getItem('theme') || 'light';
+            setTheme(current === 'light' ? 'dark' : 'light');
+        }
+
+        // Apply on load + persist
+        setTheme(localStorage.getItem('theme') || 'light');
+        themeToggle ? .addEventListener('click', toggleTheme);
+        themeToggleMobile ? .addEventListener('click', toggleTheme);
+        // Close mobile menu on resize to desktop
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768) {
+                closeMobileMenu();
+            }
+        }
+
+        );
+        // Active section underline (desktop) + aria-current handling
+        const navLinks = Array.from(document.querySelectorAll('.md\\:flex a[href^=" # "].navlink'));
+        const sections = Array.from(document.querySelectorAll('section[id]'));
+        const setActive = (id) => {
+            navLinks.forEach(l => {
+                const isActive = l.getAttribute('href') === `#$ {
+                                        id
+                                    }
+                                    `;
+                if (isActive) {
+                    l.setAttribute('aria-current', 'page');
+                } else {
+                    l.removeAttribute('aria-current');
+                }
+            });
+        }
+
+            ;
+        const observer = new IntersectionObserver((entries) => {
+            const visible = entries.filter(e => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+            if (visible ? .target ? .id) {
+                setActive(visible.target.id);
+            }
+        }
+
+            , {
+                root: null,
+                threshold: [0.15, 0.25, 0.35, 0.5]
+            }
+
+        );
+        sections.forEach(s => observer.observe(s));
+    </script>
+</body>
+
+</html>
+
+</html>
